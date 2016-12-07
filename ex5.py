@@ -1,6 +1,13 @@
 import xml.etree.ElementTree as ET
 
 
+#############################################
+#   Demo store function, just to test before can use the XML
+#   Need to remove after we can work with the other stores
+#   Couldn't import it from ex5_gui.py
+#############################################
+
+
 def get_attribute(store_db, ItemCode, tag):
     """
     Returns the attribute (tag)
@@ -14,9 +21,10 @@ def string_item(item):
     """
     Textual representation of an item in a store.
     Returns a string in the format of '[ItemCode] (ItemName)'
-
     """
-    pass
+    result_string = "[" + item["ItemCode"] + "]\t" + "{" + item["ItemName"] + \
+                    "}"
+    return result_string
 
 
 def string_store_items(store_db):
