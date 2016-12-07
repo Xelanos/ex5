@@ -4,8 +4,10 @@ import xml.etree.ElementTree as ET
 def get_attribute(store_db, ItemCode, tag):
     """
     Returns the attribute (tag)
-    of an Item with code: Itemcode in the given stor
+    of an Item with code: Itemcode in the given store
     """
+    attribute_result = store_db[1][ItemCode][tag]
+    return attribute_result
 
 
 def string_item(item):
