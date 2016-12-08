@@ -45,7 +45,21 @@ def read_prices_file(filename):
     values smaller  dictionaries mapping attribute names to their values.
     Important attributes include 'ItemCode', 'ItemName', and 'ItemPrice'
     """
-    pass
+    tree = ET.parse(filename)
+    root = tree.getroot()
+    store_id = root.find("StoreId").text
+    store_items = root.find("Items").findall("Item")
+    store_db = dict()
+    item_code = EMPTY_STRING
+    item_name = EMPTY_STRING
+    item_price = EMPTY_STRING
+    for item in store_items:
+        item_code = item.find("ItemCode").text
+        item_name = item.find("ItemName").text
+        item_price = item.find("ItemPrice").text
+        store_db[item_code] = {"ItemName": item_name, "ItemPrice": item_price,
+                               "ItemCode": item_code}
+    return store_id, store_db
 
 
 def filter_store(store_db, filter_txt):
