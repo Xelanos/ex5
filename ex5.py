@@ -1,39 +1,6 @@
 import xml.etree.ElementTree as ET
-import ex5_gui
 
-#############################################
-#   Demo store function, just to test before can use the XML
-#   Need to remove after we can work with the other stores
-#   Couldn't import it from ex5_gui.py
-#############################################
-
-def get_demo_store():
-    '''
-    loads a demo store into the program
-    '''
-    store_id = '001'
-    store_db = {'59907': {'ManufacturerName': 'מעדנות בע"מ',
-      'ManufactureCountry': 'IL', 'Quantity': '500.00','ItemCode': '59907',
-      'ItemPrice': '26.10', 'PriceUpdateDate': '2014-07-22 08:09',
-      'UnitOfMeasure': '100 גרם', 'ItemName': 'פיצה משפחתית'},
-      '66196': {'ManufacturerName': 'אסם',
-      'ManufactureCountry': 'IL', 'Quantity':
-      '200.00', 'ItemCode': '66196', 'ItemPrice': '3.80',
-      'PriceUpdateDate': '2015-05-19 08:34',
-      'UnitOfMeasure': '100 גרם', 'ItemName': 'ביסלי גריל'},
-      '30794': {'ManufacturerName': 'תנובה',
-      'ManufactureCountry': 'IL', 'Quantity': '1.00',  'ItemCode': '30794',
-      'ItemPrice': '10.90', 'PriceUpdateDate': '2013-12-08 13:48',
-      'UnitOfMeasure': 'ליטר', 'ItemName': 'משקה סויה'},
-      '13520': {'ManufacturerName': 'יוניליוור',
-      'ManufactureCountry': 'IL', 'Quantity': '75.00', 'ItemCode': '13520',
-      'ItemPrice': '4.90', 'PriceUpdateDate': '2015-07-07 08:26',
-      'UnitOfMeasure': '100 גרם', 'ItemName': 'קליק קורנפלקס'},
-      '84316': {'ManufacturerName': 'החברה המרכזית לייצור משקאות',
-      'ManufactureCountry': 'IL', 'Quantity': '1.50', 'ItemCode': '84316',
-      'ItemPrice': '7.20', 'PriceUpdateDate': '2013-12-31 07:28',
-      'UnitOfMeasure': 'ליטר', 'ItemName': 'קוקה קולה בקבוק 1.5 ליטר'}}
-    return (store_id, store_db)
+EMPTY_STRING = ""
 
 
 def get_attribute(store_db, ItemCode, tag):
@@ -41,7 +8,7 @@ def get_attribute(store_db, ItemCode, tag):
     Returns the attribute (tag)
     of an Item with code: Itemcode in the given store
     """
-    attribute_result = store_db[1][ItemCode][tag]
+    attribute_result = store_db[ItemCode][tag]
     return attribute_result
 
 
@@ -61,7 +28,10 @@ def string_store_items(store_db):
     string representation of item1
     string representation of item2
     """
-    pass
+    store_string = EMPTY_STRING
+    for item in store_db:
+        store_string = store_string + string_item(store_db[item]) + "\n"
+    return store_string
 
 
 def read_prices_file(filename):
