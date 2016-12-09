@@ -48,8 +48,9 @@ def read_prices_file(filename):
     tree = ET.parse(filename)
     root = tree.getroot()
     store_id = root.find("StoreId").text
-    store_items = root.find("Items").findall("Item")
-    store_db = dict()
+    store_items = root.find("Items").findall("Item")    # getting all the items
+    store_db = dict()   # empty dict for the result
+    # the next 3 vars will store the results
     item_code = EMPTY_STRING
     item_name = EMPTY_STRING
     item_price = EMPTY_STRING
