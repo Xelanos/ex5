@@ -1,6 +1,9 @@
 import xml.etree.ElementTree as ET
 
 EMPTY_STRING = ""
+NAME_STR = "ItemName"
+CODE_STR = "ItemCode"
+PRICE_STR = "ItemPrice"
 
 
 def get_attribute(store_db, ItemCode, tag):
@@ -55,11 +58,11 @@ def read_prices_file(filename):
     item_name = EMPTY_STRING
     item_price = EMPTY_STRING
     for item in store_items:
-        item_code = item.find("ItemCode").text
-        item_name = item.find("ItemName").text
-        item_price = item.find("ItemPrice").text
-        store_db[item_code] = {"ItemName": item_name, "ItemPrice": item_price,
-                               "ItemCode": item_code}
+        item_code = item.find(CODE_STR).text
+        item_name = item.find(NAME_STR).text
+        item_price = item.find(PRICE_STR).text
+        store_db[item_code] = {NAME_STR: item_name, PRICE_STR: item_price,
+                               CODE_STR: item_code}
     return store_id, store_db
 
 
@@ -72,7 +75,13 @@ def filter_store(store_db, filter_txt):
     store_db: a dictionary of dictionaries as created in read_prices_file.
     filter_txt: the filter text as given by the user.
     """
-    pass
+    filtered_store = dict()
+    for item in store_db:
+        if filter_txt in store_db[item][NAME_STR]:
+            filtered_store[item] = store_db[item]
+    return filtered_store
+
+
 
 
 def create_basket_from_txt(basket_txt):
