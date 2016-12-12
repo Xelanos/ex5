@@ -175,7 +175,6 @@ def basket_item_name(stores_db_list, ItemCode):
     return '['+ItemCode+']'
 
 
-
 def save_basket(basket, filename):
     """
     Save the basket into a file
@@ -185,7 +184,8 @@ def save_basket(basket, filename):
     ...
     [ItemCodeN]
     """
-    pass
+    f = open(filename, 'w')
+    f.write('\n'.join(basket))
 
 
 def load_basket(filename):
