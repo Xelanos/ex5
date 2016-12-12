@@ -6,10 +6,13 @@
 ==================
 =  Description:  =
 ==================
-
+A program that compares baskets from different stores and flags
+the most worthwhile basket in red.
+ takes the stores DB from XML's of the Ministry of Economics.
 
 ======================
 =  Special Comments  =
 ======================
-we used the follwing sites:
+we used the following sites:
 http://stackoverflow.com/
+https://docs.python.org/3/
