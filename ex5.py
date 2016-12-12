@@ -55,23 +55,12 @@ def read_prices_file(filename):
     store_id = root.find("StoreId").text
     store_items = root.find("Items").findall("Item")    # getting all the items
     store_db = dict()   # empty dict for the result
-    # the next 3 vars will store the results
-    item_code = EMPTY_STRING
-    item_name = EMPTY_STRING
-    item_price = EMPTY_STRING
     for item in store_items:
         item_code = item.find(CODE_STR).text
         item_attributes = dict()   # empty dict for each item
         for attribute in item:
             item_attributes[attribute.tag] = attribute.text
         store_db[item_code] = item_attributes
-
-    # for item in store_items:
-    #     item_code = item.find(CODE_STR).text
-    #     item_name = item.find(NAME_STR).text
-    #     item_price = item.find(PRICE_STR).text
-    #     store_db[item_code] = {NAME_STR: item_name, PRICE_STR: item_price,
-    #                            CODE_STR: item_code}
     return store_id, store_db
 
 
@@ -97,17 +86,18 @@ def create_basket_from_txt(basket_txt):
     Receives text representation of few items (and maybe some garbage
       at the edges)
     Returns a basket- list of ItemCodes that were included in basket_txt
+
     """
-    str_to_check = None     # value if there wasn't open char before
+    str_to_check = None  # value if there wasn't open char before
     result_list = []
     for char in basket_txt:
         if char is OPEN_CHAR:
-            str_to_check = EMPTY_STRING     # Value shows we had open char
+            str_to_check = EMPTY_STRING  # Value shows we had open char
         elif char is CLOSE_CHAR:
             if str_to_check is not None:
                 # if we got to the end of this part and have content
                 result_list.append(str_to_check)
-            str_to_check = None     # reset value for the next round
+            str_to_check = None  # reset value for the next round
         elif str_to_check is not None:
             # if we still didn't find close char but had open,
             # keep adding letters
@@ -116,6 +106,23 @@ def create_basket_from_txt(basket_txt):
             str_to_check = None
     return result_list
 
+    # user_basket = []  # a list to fill the basket
+    # starting_bracket_index = basket_txt.find('[')
+    # while starting_bracket_index is not -1:
+    #     # -1 is the return value of find() if did not find the string
+    #     ending_bracket_index = basket_txt.find(']', starting_bracket_index)
+    #     if ending_bracket_index == -1:
+    #         break
+    #     else:
+    #         item_code = basket_txt[
+    #                     starting_bracket_index + 1:ending_bracket_index]
+    #         # the code is between the brackets
+    #         user_basket.append(item_code)
+    #         # clip the basket txt and try to find another '['
+    #         basket_txt = basket_txt[ending_bracket_index:]
+    #         starting_bracket_index = basket_txt.find('[')
+    #
+    # return user_basket
 
 
 def get_basket_prices(store_db, basket):
@@ -128,7 +135,13 @@ def get_basket_prices(store_db, basket):
       its price will be None.
 
     """
-    pass
+    price_list = []     # the list of prices
+    for item in basket:
+        if item in store_db.keys():
+            price_list.append(float(store_db[item][PRICE_STR]))
+        else:
+            price_list.append(None)
+    return price_list
 
 
 def sum_basket(price_list):
