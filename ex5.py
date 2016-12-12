@@ -207,6 +207,23 @@ def load_basket(filename):
     return basket_list
 
 
+def max_index(list_of_lists, index):
+    """
+    A function that takes an index and list of lists.
+    the inner lists are of the SAME LENGTH and consist of floats.
+    the function returns the max value of the index across all the lists.
+    if value is None in the inner list regards as 0
+    """
+    index_across_lists = [0]*len(list_of_lists)
+    # each index corresponds to a list
+    for k in range(len(list_of_lists)):
+        if list_of_lists[k][index] is None:
+            index_across_lists[k] = 0
+        else:
+            index_across_lists[k] = list_of_lists[k][index]
+    return max(index_across_lists)
+
+
 def best_basket(list_of_price_list):
     """
     Arg: list of lists, where each inner list is list of prices as created
@@ -215,4 +232,19 @@ def best_basket(list_of_price_list):
     missing item has a price of its maximal price in the other stores *1.25
 
     """
-    pass
+    FINE = 1.25
+    total_basket_list = []
+    for price_list in list_of_price_list:
+        total_per_store = 0  # starting value for each store
+        for i in range(len(price_list)):
+            if price_list[i] is not None:
+                # if there is a price then add it
+                total_per_store += price_list[i]
+            else:
+                # if there is not a price, fine the store
+                # according to the product max price across all stores
+                max_value = max_index(list_of_price_list, i)
+                total_per_store += max_value*FINE
+        total_basket_list.append(total_per_store)
+    min_basket_value = min(total_basket_list)
+    return total_basket_list.index(min_basket_value)
