@@ -64,7 +64,6 @@ def read_prices_file(filename):
     return store_id, store_db
 
 
-
 def filter_store(store_db, filter_txt):
     """
     Create a new dictionary that includes only the items
@@ -151,7 +150,15 @@ def sum_basket(price_list):
       and the number of missing items (Number of Nones)
 
     """
-    pass
+    missing_items_counter = 0
+    basket_sum = 0  # starting value printed if all are None
+    for price in price_list:
+        if price == None:
+            missing_items_counter += 1
+        else:
+            basket_sum += price
+    return basket_sum, missing_items_counter
+
 
 
 def basket_item_name(stores_db_list, ItemCode):
