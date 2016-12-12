@@ -186,6 +186,7 @@ def save_basket(basket, filename):
     """
     f = open(filename, 'w')
     f.write('\n'.join(basket))
+    f.close()
 
 
 def load_basket(filename):
@@ -197,7 +198,8 @@ def load_basket(filename):
     ...
     [ItemCodeN]
     """
-    pass
+    f = open(filename, 'r')
+    list(f)
 
 
 def best_basket(list_of_price_list):
