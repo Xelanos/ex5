@@ -4,6 +4,8 @@ EMPTY_STRING = ""
 NAME_STR = "ItemName"
 CODE_STR = "ItemCode"
 PRICE_STR = "ItemPrice"
+OPEN_CHAR = "["
+CLOSE_CHAR = "]"
 
 
 def get_attribute(store_db, ItemCode, tag):
@@ -90,16 +92,30 @@ def filter_store(store_db, filter_txt):
     return filtered_store
 
 
-
-
 def create_basket_from_txt(basket_txt):
     """
     Receives text representation of few items (and maybe some garbage
       at the edges)
     Returns a basket- list of ItemCodes that were included in basket_txt
-
     """
-    pass
+    str_to_check = None     # value if there wasn't open char before
+    result_list = []
+    for char in basket_txt:
+        if char is OPEN_CHAR:
+            str_to_check = EMPTY_STRING     # Value shows we had open char
+        elif char is CLOSE_CHAR:
+            if str_to_check is not None:
+                # if we got to the end of this part and have content
+                result_list.append(str_to_check)
+            str_to_check = None     # reset value for the next round
+        elif str_to_check is not None:
+            # if we still didn't find close char but had open,
+            # keep adding letters
+            str_to_check = str_to_check + char
+        else:
+            str_to_check = None
+    return result_list
+
 
 
 def get_basket_prices(store_db, basket):
