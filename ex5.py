@@ -171,7 +171,9 @@ def basket_item_name(stores_db_list, ItemCode):
     """
     for store in stores_db_list:
         if ItemCode in store.keys():
-            return store[ItemCode][NAME_STR]
+            string_of_item = "["+ItemCode+"]\t" +\
+                             '{'+store[ItemCode][NAME_STR]+'}'
+            return string_of_item
     return '['+ItemCode+']'
 
 
