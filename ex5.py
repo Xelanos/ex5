@@ -201,9 +201,10 @@ def load_basket(filename):
     [ItemCodeN]
     """
     f = open(filename, 'r')
-    list_of_basket = list(f)
-    return list_of_basket
-
+    basket_list = []  # empty list to work with
+    for line in f:
+        basket_list.append(line.rstrip())  # rstrip to remove /n from the end
+    return basket_list
 
 
 def best_basket(list_of_price_list):
