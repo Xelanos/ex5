@@ -105,24 +105,6 @@ def create_basket_from_txt(basket_txt):
             str_to_check = None
     return result_list
 
-    # user_basket = []  # a list to fill the basket
-    # starting_bracket_index = basket_txt.find('[')
-    # while starting_bracket_index is not -1:
-    #     # -1 is the return value of find() if did not find the string
-    #     ending_bracket_index = basket_txt.find(']', starting_bracket_index)
-    #     if ending_bracket_index == -1:
-    #         break
-    #     else:
-    #         item_code = basket_txt[
-    #                     starting_bracket_index + 1:ending_bracket_index]
-    #         # the code is between the brackets
-    #         user_basket.append(item_code)
-    #         # clip the basket txt and try to find another '['
-    #         basket_txt = basket_txt[ending_bracket_index:]
-    #         starting_bracket_index = basket_txt.find('[')
-    #
-    # return user_basket
-
 
 def get_basket_prices(store_db, basket):
     """
@@ -187,7 +169,8 @@ def save_basket(basket, filename):
     [ItemCodeN]
     """
     f = open(filename, 'w')
-    f.write('\n'.join(basket))
+    for item_code in basket:
+        f.write("["+item_code+"]\n")
     f.close()
 
 
@@ -201,10 +184,10 @@ def load_basket(filename):
     [ItemCodeN]
     """
     f = open(filename, 'r')
-    basket_list = []  # empty list to work with
+    basket_string = EMPTY_STRING
     for line in f:
-        basket_list.append(line.rstrip())  # rstrip to remove /n from the end
-    return basket_list
+        basket_string += line
+    return create_basket_from_txt(basket_string)
 
 
 def max_index(list_of_lists, index):
@@ -233,7 +216,7 @@ def best_basket(list_of_price_list):
 
     """
     FINE = 1.25
-    total_basket_list = []
+    total_basket_list = [] # list of total for each store to compare in the end
     for price_list in list_of_price_list:
         total_per_store = 0  # starting value for each store
         for i in range(len(price_list)):
@@ -244,7 +227,7 @@ def best_basket(list_of_price_list):
                 # if there is not a price, fine the store
                 # according to the product max price across all stores
                 max_value = max_index(list_of_price_list, i)
-                total_per_store += max_value*FINE
+                total_per_store += max_value * FINE
         total_basket_list.append(total_per_store)
     min_basket_value = min(total_basket_list)
     return total_basket_list.index(min_basket_value)
