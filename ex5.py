@@ -160,7 +160,6 @@ def sum_basket(price_list):
     return basket_sum, missing_items_counter
 
 
-
 def basket_item_name(stores_db_list, ItemCode):
     """
     stores_db_list is a list of stores (list of dictionaries of
@@ -170,7 +169,11 @@ def basket_item_name(stores_db_list, ItemCode):
     If the item is not avaiable in any of the stores return only [ItemCode]
 
     """
-    pass
+    for store in stores_db_list:
+        if ItemCode in store.keys():
+            return store[ItemCode][NAME_STR]
+    return '['+ItemCode+']'
+
 
 
 def save_basket(basket, filename):
