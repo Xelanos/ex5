@@ -153,7 +153,7 @@ def sum_basket(price_list):
     missing_items_counter = 0
     basket_sum = 0  # starting value printed if all are None
     for price in price_list:
-        if price == None:
+        if price is None:
             missing_items_counter += 1
         else:
             basket_sum += price
