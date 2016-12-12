@@ -59,11 +59,19 @@ def read_prices_file(filename):
     item_price = EMPTY_STRING
     for item in store_items:
         item_code = item.find(CODE_STR).text
-        item_name = item.find(NAME_STR).text
-        item_price = item.find(PRICE_STR).text
-        store_db[item_code] = {NAME_STR: item_name, PRICE_STR: item_price,
-                               CODE_STR: item_code}
+        item_attributes = dict()   # empty dict for each item
+        for attribute in item:
+            item_attributes[attribute.tag] = attribute.text
+        store_db[item_code] = item_attributes
+
+    # for item in store_items:
+    #     item_code = item.find(CODE_STR).text
+    #     item_name = item.find(NAME_STR).text
+    #     item_price = item.find(PRICE_STR).text
+    #     store_db[item_code] = {NAME_STR: item_name, PRICE_STR: item_price,
+    #                            CODE_STR: item_code}
     return store_id, store_db
+
 
 
 def filter_store(store_db, filter_txt):
