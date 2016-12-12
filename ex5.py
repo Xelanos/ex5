@@ -199,7 +199,9 @@ def load_basket(filename):
     [ItemCodeN]
     """
     f = open(filename, 'r')
-    list(f)
+    list_of_basket = list(f)
+    return list_of_basket
+
 
 
 def best_basket(list_of_price_list):
