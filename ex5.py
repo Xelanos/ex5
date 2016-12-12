@@ -248,3 +248,4 @@ def best_basket(list_of_price_list):
         total_basket_list.append(total_per_store)
     min_basket_value = min(total_basket_list)
     return total_basket_list.index(min_basket_value)
+
